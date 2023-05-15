@@ -12,12 +12,43 @@
       </field>
     </record>
 
+    <record model="ir.ui.view" id="manage.task_form">
+      <field name="name">manage task form</field>
+      <field name="model">manage.task</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name"/>
+            <field name="description"/>
+            <field name="creation_date"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="is_paused"/>        
+            <field name="sprint"/>        
+            <field name="technologies"/>        
+          </group>
+        </form>
+      </field>
+    </record>
+
 
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="manage.action_task_window">
       <field name="name">manage task window</field>
       <field name="res_model">manage.task</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="manage.action_sprint_window">
+      <field name="name">manage sprint window</field>
+      <field name="res_model">manage.sprint</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="manage.action_technology_window">
+      <field name="name">manage technology window</field>
+      <field name="res_model">manage.technology</field>
       <field name="view_mode">tree,form</field>
     </record>
 
@@ -51,6 +82,13 @@
 
     <menuitem name="Tasks" id="manage.menu_1_task_list" parent="manage.menu_1"
               action="manage.action_task_window"/>
+    
+    <menuitem name="Sprints" id="manage.menu_1_sprint_list" parent="manage.menu_1"
+              action="manage.action_sprint_window"/>
+    
+    <menuitem name="Technologies" id="manage.menu_1_technology_list" parent="manage.menu_1"
+              action="manage.action_technology_window"/>
+              
     <!--menuitem name="Server to list" id="manage" parent="manage.menu_2"
               action="manage.action_server"/>
 -->
