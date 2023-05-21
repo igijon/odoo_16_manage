@@ -18,6 +18,7 @@
       <field name="arch" type="xml">
         <form>
           <group>
+            <field name="code"/>
             <field name="name"/>
             <field name="description"/>
             <field name="creation_date"/>
@@ -26,6 +27,23 @@
             <field name="is_paused"/>        
             <field name="sprint"/>        
             <field name="technologies"/>        
+          </group>
+        </form>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="manage.sprint_form">
+      <field name="name">manage sprint form</field>
+      <field name="model">manage.sprint</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name"/>
+            <field name="description"/>
+            <field name="duration"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="tasks"/>        
           </group>
         </form>
       </field>
