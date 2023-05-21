@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+from odoo import _
 import datetime
 import logging
 
@@ -26,10 +28,14 @@ class task(models.Model):
     #@api.one
     def _get_code(self):
         for task in self:
-            if len(task.sprint) == 0:
-                task.code = "TSK_"+str(task.id)
-            else:
-                task.code = str(task.sprint.name).upper()+"_"+str(task.id)
+            try:
+                if len(task.sprint) == 0:
+                    task.code = "TSK_"+str(task.id)
+                else:
+                    task.code = str(task.sprint.name).upper()+"_"+str(task.id)
+                _logger.info("Código generado: "+task.code)
+            except:
+                raise ValidationError(_("Generación de código errónea"))
 
 class sprint(models.Model):
     _name = 'manage.sprint'
@@ -45,11 +51,14 @@ class sprint(models.Model):
     @api.depends('start_date', 'duration')
     def _get_end_date(self):
         for sprint in self:
-            if isinstance(sprint.start_date, datetime.datetime) and sprint.duration > 0:
-                sprint.end_date = sprint.start_date + datetime.timedelta(days=sprint.duration)
-            else:
-                sprint.end_date = sprint.start_date
-
+            try:
+                if isinstance(sprint.start_date, datetime.datetime) and sprint.duration > 0:
+                    sprint.end_date = sprint.start_date + datetime.timedelta(days=sprint.duration)
+                else:
+                    sprint.end_date = sprint.start_date
+                _logger.debug("Fecha final de sprint creada")
+            except:
+                raise ValidationError(_("Generación de fecha errónea"))
 
 class technology(models.Model):
     _name = 'manage.technology'
