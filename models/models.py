@@ -9,18 +9,47 @@ import logging
 
 _logger = logging.getLogger(__name__) #Información que obtiene del fichero de configuración
 
+class project(models.Model):
+    _name = 'manage.project'
+    _description = 'manage.project'
+    
+    name = fields.Char()
+    description = fields.Text()
+    histories = fields.One2many(comodel_name="manage.history", inverse_name="project")
+
+class history(models.Model):
+    _name = 'manage.history'
+    _description = 'manage.history'
+    
+    name = fields.Char()
+    description = fields.Text()
+    project = fields.Many2one("manage.project", ondelete="set null")
+    tasks = fields.One2many(string="Tareas", comodel_name="manage.task", inverse_name="history")
+    used_technologies = fields.Many2many("manage.technology", compute="_get_used_technologies")
+
+    def _get_used_technologies(self):
+        for history in self:
+            technologies = None
+            for task in history.tasks:
+                if not technologies:
+                    technologies = task.technologies
+                else:
+                    technologies = technologies + task.technologies
+            history.used_technologies = technologies   
+
+
 class task(models.Model):
     _name = 'manage.task'
     _description = 'manage.task'
 
     code = fields.Char(compute="_get_code")
     name = fields.Char(string="Nombre", readonly=False, required=True, help="Introduzca el nombre") #Name
+    history = fields.Many2one("manage.history", ondelete="set null", help="Historia relacionada")
     description = fields.Text()
-    creation_date = fields.Date()
     start_date = fields.Datetime()
     end_date = fields.Datetime()
     is_paused = fields.Boolean()
-    sprint = fields.Many2one("manage.sprint", ondelete="set null", help="Sprint relacionado")
+    sprint = fields.Many2one("manage.sprint", compute="_get_sprint", store=True)
     technologies = fields.Many2many(comodel_name="manage.technology",
                                     relation="technologies_tasks",
                                     column1="task_id",
@@ -29,18 +58,28 @@ class task(models.Model):
     def _get_code(self):
         for task in self:
             try:
-                if len(task.sprint) == 0:
-                    task.code = "TSK_"+str(task.id)
-                else:
-                    task.code = str(task.sprint.name).upper()+"_"+str(task.id)
+                task.code = "TSK_"+str(task.id)
                 _logger.info("Código generado: "+task.code)
             except:
                 raise ValidationError(_("Generación de código errónea"))
+            
+    @api.depends('code')
+    def _get_sprint(self):
+        for task in self:
+            sprints = self.env['manage.sprint'].search([('project.id', '=', task.history.project.id)])
+            found = False
+            for sprint in sprints:
+                if isinstance(sprint.end_date, datetime.datetime) and sprint.end_date > datetime.datetime.now():
+                    task.sprint = sprint.id
+                    found = True
+            if not found:
+                task.sprint = False
 
 class sprint(models.Model):
     _name = 'manage.sprint'
     _description = 'manage.sprint'
 
+    project = fields.Many2one("manage.project")
     name = fields.Char()
     description = fields.Text()
     duration = fields.Integer()
