@@ -48,6 +48,8 @@
       <field name="arch" type="xml">
         <form>
           <group>
+            <field name="project"/>
+            <field name="definition_date"/>
             <field name="history"/>
             <field name="code"/>
             <field name="name"/>

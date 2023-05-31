@@ -42,6 +42,7 @@ class task(models.Model):
     _name = 'manage.task'
     _description = 'manage.task'
 
+    project = fields.Many2one('manage.project', related='history.project', readonly=True)
     code = fields.Char(compute="_get_code")
     name = fields.Char(string="Nombre", readonly=False, required=True, help="Introduzca el nombre") #Name
     history = fields.Many2one("manage.history", ondelete="set null", help="Historia relacionada")
@@ -75,6 +76,12 @@ class task(models.Model):
             if not found:
                 task.sprint = False
 
+    # def _get_definition_date(self):
+    #     return datetime.datetime.now()
+
+    # definition_date = fields.Datetime(default=_get_definition_date)
+    definition_date = fields.Datetime(default=lambda p: datetime.datetime.now())
+
 class sprint(models.Model):
     _name = 'manage.sprint'
     _description = 'manage.sprint'
@@ -82,11 +89,11 @@ class sprint(models.Model):
     project = fields.Many2one("manage.project")
     name = fields.Char()
     description = fields.Text()
-    duration = fields.Integer()
+    duration = fields.Integer(default=15)
     start_date = fields.Datetime()
     end_date = fields.Datetime(compute="_get_end_date", store=True)
     tasks = fields.One2many(string="Tareas", comodel_name="manage.task", inverse_name='sprint')
-
+    
     @api.depends('start_date', 'duration')
     def _get_end_date(self):
         for sprint in self:
