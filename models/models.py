@@ -80,6 +80,7 @@ class task(models.Model):
     #     return datetime.datetime.now()
 
     # definition_date = fields.Datetime(default=_get_definition_date)
+    
     definition_date = fields.Datetime(default=lambda p: datetime.datetime.now())
 
 class sprint(models.Model):
@@ -89,7 +90,9 @@ class sprint(models.Model):
     project = fields.Many2one("manage.project")
     name = fields.Char()
     description = fields.Text()
+
     duration = fields.Integer(default=15)
+    
     start_date = fields.Datetime()
     end_date = fields.Datetime(compute="_get_end_date", store=True)
     tasks = fields.One2many(string="Tareas", comodel_name="manage.task", inverse_name='sprint')
