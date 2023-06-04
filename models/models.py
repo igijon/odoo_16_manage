@@ -9,6 +9,17 @@ import logging
 
 _logger = logging.getLogger(__name__) #Información que obtiene del fichero de configuración
 
+class developer(models.Model):
+    _name = 'res.partner'
+    _inherit = 'res.partner'
+
+    technologies = fields.Many2many('manage.technology',
+                                    relation='developer_technologies',
+                                    column1='developer_id',
+                                    column2='technolgies_id')
+    
+
+
 class project(models.Model):
     _name = 'manage.project'
     _description = 'manage.project'

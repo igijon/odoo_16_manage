@@ -87,6 +87,12 @@
     <!-- actions opening views on models -->
 
     
+    <record model="ir.actions.act_window" id="manage.action_developer_window">
+      <field name="name">manage project window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
     <record model="ir.actions.act_window" id="manage.action_project_window">
       <field name="name">manage project window</field>
       <field name="res_model">manage.project</field>
@@ -159,6 +165,9 @@
     
     <menuitem name="Technologies" id="manage.menu_1_technology_list" parent="manage.menu_1"
               action="manage.action_technology_window"/>
+
+    <menuitem name="Devs" id="manage.menu_1_devs_list" parent="manage.menu_1"
+              action="manage.action_developer_window"/>
               
     <!--menuitem name="Server to list" id="manage" parent="manage.menu_2"
               action="manage.action_server"/>
