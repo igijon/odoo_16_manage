@@ -13,12 +13,22 @@ class developer(models.Model):
     _name = 'res.partner'
     _inherit = 'res.partner'
 
+    is_dev = fields.Boolean()
+    
     technologies = fields.Many2many('manage.technology',
                                     relation='developer_technologies',
                                     column1='developer_id',
-                                    column2='technolgies_id')
+                                    column2='technologies_id')
     
-
+    @api.onchange('is_dev')
+    def _onchange_is_dev(self):
+        categories = self.env['res.partner.category'].search([('name','=','Devs')])
+        if len(categories) > 0:
+            category = categories[0]
+        else:
+            category = self.env['res.partner.category'].create({'name':'Devs'})
+        self.category_id = [(4, category.id)]    
+    
 
 class project(models.Model):
     _name = 'manage.project'
@@ -66,6 +76,8 @@ class task(models.Model):
                                     relation="technologies_tasks",
                                     column1="task_id",
                                     column2="technology_id")
+    developer = fields.Many2one('res.partner')
+
     #@api.one
     def _get_code(self):
         for task in self:

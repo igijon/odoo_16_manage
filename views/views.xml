@@ -11,6 +11,25 @@
     </record>
 
     <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="manage.devs_partner_form">
+      <field name="name">manage devs form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"></field>
+      <field name="mode">primary</field>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+          <page name="devs" string="Devs" attrs="{'invisible':[('is_dev', '=', False)]}">
+            <group>
+              <group>
+                <field name="is_dev" attrs="{'invisible':True}"></field>
+                <field name="technologies"></field>
+              </group>
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
     <record model="ir.ui.view" id="manage.project_form">
       <field name="name">manage project form</field>
       <field name="model">manage.project</field>
@@ -57,7 +76,11 @@
             <field name="start_date"/>
             <field name="end_date"/>
             <field name="is_paused"/>        
-            <field name="sprint"/>        
+            <field name="sprint"/>
+            <field 
+              name="developer"
+              domain="[('is_dev','=',True)]"
+              context="{'form_view_ref':'manage.devs_partner_form'}"></field>        
             <field name="technologies"/>        
           </group>
         </form>
@@ -91,6 +114,22 @@
       <field name="name">manage project window</field>
       <field name="res_model">res.partner</field>
       <field name="view_mode">tree,form</field>
+      <field name="domain">[('is_dev', '=', True)]</field>
+      <field name="context">{'default_is_dev':True}</field>
+    </record>
+    
+    <record model="ir.actions.act_window.view" id="manage.action_view_developer_tree">
+      <field name="sequence" eval="1"></field>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="base.view_partner_tree"></field>
+      <field name="act_window_id" ref="manage.action_developer_window"></field>
+    </record>
+    
+    <record model="ir.actions.act_window.view" id="manage.action_view_developer_form">
+      <field name="sequence" eval="2"></field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="manage.devs_partner_form"></field>
+      <field name="act_window_id" ref="manage.action_developer_window"></field>
     </record>
 
     <record model="ir.actions.act_window" id="manage.action_project_window">
