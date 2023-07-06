@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="manage.sprint_form">
+            <field name="name">manage sprint form</field>
+            <field name="model">manage.sprint</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="project"/>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="duration"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="tasks"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="manage.action_sprint_window">
+            <field name="name">manage sprint window</field>
+            <field name="res_model">manage.sprint</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Sprints" id="manage.menu_1_sprint_list" parent="manage.menu_1" action="manage.action_sprint_window"/>
+
+
+    </data>
+
+
+</odoo>

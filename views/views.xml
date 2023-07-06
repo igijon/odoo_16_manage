@@ -1,14 +1,6 @@
 <odoo>
   <data>
-    <record model="ir.ui.view" id="manage.task_list">
-      <field name="name">manage task list</field>
-      <field name="model">manage.task</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-        </tree>
-      </field>
-    </record>
+    
 
     <!-- explicit list view definition -->
     <record model="ir.ui.view" id="manage.devs_partner_form">
@@ -23,90 +15,16 @@
               <group>
                 <field name="is_dev" attrs="{'invisible':True}"></field>
                 <field name="technologies"></field>
+                <field 
+                  name="tasks"
+                  context="{'current_developer':active_id}"></field>
               </group>
             </group>
           </page>
         </xpath>
       </field>
     </record>
-
-    <record model="ir.ui.view" id="manage.project_form">
-      <field name="name">manage project form</field>
-      <field name="model">manage.project</field>
-      <field name="arch" type="xml">
-        <form>
-          <group>
-            <field name="name"/>
-            <field name="description"/>
-            <field name="histories"/> 
-          </group>
-        </form>
-      </field>
-    </record>
-
-    <record model="ir.ui.view" id="manage.history_form">
-      <field name="name">manage history form</field>
-      <field name="model">manage.history</field>
-      <field name="arch" type="xml">
-        <form>
-          <group>
-            <field name="project"/>
-            <field name="name"/>
-            <field name="description"/>
-            <field name="tasks"/> 
-            <field name="used_technologies"/> 
-          </group>
-        </form>
-      </field>
-    </record>
-
-
-    <record model="ir.ui.view" id="manage.task_form">
-      <field name="name">manage task form</field>
-      <field name="model">manage.task</field>
-      <field name="arch" type="xml">
-        <form>
-          <group>
-            <field name="project"/>
-            <field name="definition_date"/>
-            <field name="history"/>
-            <field name="code"/>
-            <field name="name"/>
-            <field name="description"/>
-            <field name="start_date"/>
-            <field name="end_date"/>
-            <field name="is_paused"/>        
-            <field name="sprint"/>
-            <field 
-              name="developer"
-              domain="[('is_dev','=',True)]"
-              context="{'form_view_ref':'manage.devs_partner_form'}"></field>        
-            <field name="technologies"/>        
-          </group>
-        </form>
-      </field>
-    </record>
     
-    <record model="ir.ui.view" id="manage.sprint_form">
-      <field name="name">manage sprint form</field>
-      <field name="model">manage.sprint</field>
-      <field name="arch" type="xml">
-        <form>
-          <group>
-            <field name="project"/>
-            <field name="name"/>
-            <field name="description"/>
-            <field name="duration"/>
-            <field name="start_date"/>
-            <field name="end_date"/>
-            <field name="tasks"/>        
-          </group>
-        </form>
-      </field>
-    </record>
-    
-
-
     <!-- actions opening views on models -->
 
     
@@ -131,31 +49,7 @@
       <field name="view_id" ref="manage.devs_partner_form"></field>
       <field name="act_window_id" ref="manage.action_developer_window"></field>
     </record>
-
-    <record model="ir.actions.act_window" id="manage.action_project_window">
-      <field name="name">manage project window</field>
-      <field name="res_model">manage.project</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    
-    <record model="ir.actions.act_window" id="manage.action_history_window">
-      <field name="name">manage history window</field>
-      <field name="res_model">manage.history</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="manage.action_task_window">
-      <field name="name">manage task window</field>
-      <field name="res_model">manage.task</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="manage.action_sprint_window">
-      <field name="name">manage sprint window</field>
-      <field name="res_model">manage.sprint</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    
+ 
     <record model="ir.actions.act_window" id="manage.action_technology_window">
       <field name="name">manage technology window</field>
       <field name="res_model">manage.technology</field>
@@ -189,18 +83,6 @@
     <!--menuitem name="Menu 2" id="manage.menu_2" parent="manage.menu_root"/>
 -->
     <!-- actions -->
-
-    <menuitem name="Projects" id="manage.menu_1_project_list" parent="manage.menu_1"
-              action="manage.action_project_window"/>
-    
-    <menuitem name="Histories" id="manage.menu_1_history_list" parent="manage.menu_1"
-              action="manage.action_history_window"/>
-
-    <menuitem name="Tasks" id="manage.menu_1_task_list" parent="manage.menu_1"
-              action="manage.action_task_window"/>
-    
-    <menuitem name="Sprints" id="manage.menu_1_sprint_list" parent="manage.menu_1"
-              action="manage.action_sprint_window"/>
     
     <menuitem name="Technologies" id="manage.menu_1_technology_list" parent="manage.menu_1"
               action="manage.action_technology_window"/>

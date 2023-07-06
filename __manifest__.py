@@ -26,6 +26,12 @@
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
+        'views/project.xml',
+        'views/history.xml',
+        'views/sprint.xml',
+        'views/task.xml',
+        'views/bug.xml',
+        'views/improvement.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

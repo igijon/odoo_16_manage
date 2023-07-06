@@ -20,6 +20,24 @@ class developer(models.Model):
                                     column1='developer_id',
                                     column2='technologies_id')
     
+    tasks = fields.Many2many('manage.task',
+                                    relation='developer_tasks',
+                                    column1='developer_id',
+                                    column2='task_id')
+ 
+    bugs = fields.Many2many('manage.bug',
+                                    relation='developer_bugs',
+                                    column1='developer_id',
+                                    column2='bug_id')
+    
+    
+    improvements = fields.Many2many('manage.improvement',
+                                    relation='developer_improvements',
+                                    column1='developer_id',
+                                    column2='improvement_id')
+    
+
+    
     @api.onchange('is_dev')
     def _onchange_is_dev(self):
         categories = self.env['res.partner.category'].search([('name','=','Devs')])
@@ -63,6 +81,7 @@ class task(models.Model):
     _name = 'manage.task'
     _description = 'manage.task'
 
+    definition_date = fields.Datetime(default=lambda p: datetime.datetime.now())
     project = fields.Many2one('manage.project', related='history.project', readonly=True)
     code = fields.Char(compute="_get_code")
     name = fields.Char(string="Nombre", readonly=False, required=True, help="Introduzca el nombre") #Name
@@ -76,7 +95,6 @@ class task(models.Model):
                                     relation="technologies_tasks",
                                     column1="task_id",
                                     column2="technology_id")
-    developer = fields.Many2one('res.partner')
 
     #@api.one
     def _get_code(self):
@@ -90,7 +108,12 @@ class task(models.Model):
     @api.depends('code')
     def _get_sprint(self):
         for task in self:
-            sprints = self.env['manage.sprint'].search([('project.id', '=', task.history.project.id)])
+            # sprints = self.env['manage.sprint'].search([('project.id', '=', task.history.project.id)])
+            if isinstance(task.history.project.id, models.NewId):
+                id_project = int(task.history.project.id.origin)
+            else:
+                id_project = task.history.project.id
+            sprints = self.env['manage.sprint'].search([('project.id','=', id_project)])
             found = False
             for sprint in sprints:
                 if isinstance(sprint.end_date, datetime.datetime) and sprint.end_date > datetime.datetime.now():
@@ -99,12 +122,67 @@ class task(models.Model):
             if not found:
                 task.sprint = False
 
-    # def _get_definition_date(self):
-    #     return datetime.datetime.now()
+    def _get_default_dev(self):
+        dev = self.browse(self._context.get('current_developer'))
+        if dev:
+            return [dev.id]
+        else:
+            return []
 
-    # definition_date = fields.Datetime(default=_get_definition_date)
+    developers = fields.Many2many(comodel_name='res.partner',
+                                  relation='developers_tasks',
+                                  column1='task_id',
+                                  column2='developer_id',
+                                  default=_get_default_dev)
+
+class bug(models.Model):
+    _name = 'manage.bug'
+    _description = 'manage.bug'
+    _inherit = 'manage.task'
+
+    technologies = fields.Many2many(comodel_name="manage.technology",
+                                    relation="technologies_bugs",
+                                    column1="bug_id",
+                                    column2="technology_id")
     
-    definition_date = fields.Datetime(default=lambda p: datetime.datetime.now())
+    tasks_linked = fields.Many2many(comodel_name="manage.task",
+                                    relation="tasks_bugs",
+                                    column1="bug_id",
+                                    column2="task_id")
+    
+    bugs_linked = fields.Many2many(comodel_name="manage.bug",
+                                    relation="bugs_bugs",
+                                    column1="bug1_id",
+                                    column2="bug2_id")
+    
+    improvements_linked = fields.Many2many(comodel_name="manage.improvement",
+                                    relation="improvements_bugs",
+                                    column1="bug_id",
+                                    column2="improvement_id")
+    
+
+    developers = fields.Many2many(comodel_name="res.partner",
+                                    relation="developers_bugs",
+                                    column1="bug_id",
+                                    column2="developer_id")
+
+class improvement(models.Model):
+    _name = 'manage.improvement'
+    _description = 'manage.improvement'
+    _inherit = 'manage.task'
+
+    technologies = fields.Many2many(comodel_name="manage.technology",
+                                    relation="technologies_improvements",
+                                    column1="improvement_id",
+                                    column2="technology_id")
+    
+    histories_linked = fields.Many2many('manage.history')
+
+    developers = fields.Many2many(comodel_name="res.partner",
+                                    relation="developers_improvements",
+                                    column1="improvement_id",
+                                    column2="developer_id")
+
 
 class sprint(models.Model):
     _name = 'manage.sprint'

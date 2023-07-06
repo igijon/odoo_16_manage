@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="manage.improvement_form">
+            <field name="name">manage improvement form</field>
+            <field name="model">manage.improvement</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="project"/>
+                        <field name="definition_date"/>
+                        <field name="history"/>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="is_paused"/>
+                        <field name="sprint"/>
+                        <field 
+                            name="developers" 
+                            domain="[('is_dev','=',True)]" 
+                            context="{'form_view_ref':'manage.devs_partner_form', 'default_is_dev':True}"
+                            widget="many2many_tags"></field>
+                        <field name="technologies"/>
+                        <field name="histories_linked"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="manage.action_improvement_window">
+            <field name="name">manage improvement window</field>
+            <field name="res_model">manage.improvement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Improvements" id="manage.menu_1_improvement_list" parent="manage.menu_1" action="manage.action_improvement_window"/>
+
+
+    </data>
+
+
+</odoo>
