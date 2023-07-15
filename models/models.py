@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 from odoo import _
 import datetime
 import logging
+import re
 
 
 _logger = logging.getLogger(__name__) #Información que obtiene del fichero de configuración
@@ -14,6 +15,7 @@ class developer(models.Model):
     _inherit = 'res.partner'
 
     is_dev = fields.Boolean()
+    access_code = fields.Char()
     
     technologies = fields.Many2many('manage.technology',
                                     relation='developer_technologies',
@@ -36,6 +38,17 @@ class developer(models.Model):
                                     column1='developer_id',
                                     column2='improvement_id')
     
+
+    @api.constrains('access_code')
+    def _check_code(self):
+        regex = re.compile('^[0-9]{8}[a-z]', re.I)
+        for dev in self:
+            if regex.match(dev.access_code):
+                _logger.info('Código de acceso generado correctamente')
+            else:
+                raise ValidationError('Formato de código de acceso incorrecto')
+            
+    _sql_constraints = [('access_code_unique', 'unique(access_code)', 'Access code ya existente.')]
 
     
     @api.onchange('is_dev')

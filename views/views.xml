@@ -14,6 +14,7 @@
             <group>
               <group>
                 <field name="is_dev" attrs="{'invisible':True}"></field>
+                <field name="access_code"></field>
                 <field name="technologies"></field>
                 <field 
                   name="tasks"
