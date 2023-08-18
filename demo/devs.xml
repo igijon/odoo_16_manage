@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+        <record id='dev_1' model='res.partner'>
+            <field name='name'>Galvan Sweetenham</field>
+            <field name='access_code'>92215968T
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+        <record id='dev_2' model='res.partner'>
+            <field name='name'>Ephrem Ferrettino</field>
+            <field name='access_code'>82640430Y
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+        <record id='dev_3' model='res.partner'>
+            <field name='name'>Hanna Willimot</field>
+            <field name='access_code'>65339468Y
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+        <record id='dev_4' model='res.partner'>
+            <field name='name'>Mattie Catterall</field>
+            <field name='access_code'>24030749N
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+        <record id='dev_5' model='res.partner'>
+            <field name='name'>Mariel Matovic</field>
+            <field name='access_code'>51149931M
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+        <record id='dev_6' model='res.partner'>
+            <field name='name'>Monika Huster</field>
+            <field name='access_code'>22771602V
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+        <record id='dev_7' model='res.partner'>
+            <field name='name'>Avictor Jikovsky</field>
+            <field name='access_code'>32236862J
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+        <record id='dev_8' model='res.partner'>
+            <field name='name'>Mahalia Geffcock</field>
+            <field name='access_code'>71284333U
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+        <record id='dev_9' model='res.partner'>
+            <field name='name'>Layton Youings</field>
+            <field name='access_code'>66933617H
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+        <record id='dev_10' model='res.partner'>
+            <field name='name'>Bradford Elcom</field>
+            <field name='access_code'>23271672E
+            </field>
+            <field name='is_dev'>True</field>
+        </record>
+    </data>
+</odoo>

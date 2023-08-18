@@ -1,30 +1,9 @@
 <odoo>
     <data>
-<!--
-          <record id="object0" model="manage.manage">
-            <field name="name">Object 0</field>
-            <field name="value">0</field>
-          </record>
-
-          <record id="object1" model="manage.manage">
-            <field name="name">Object 1</field>
-            <field name="value">10</field>
-          </record>
-
-          <record id="object2" model="manage.manage">
-            <field name="name">Object 2</field>
-            <field name="value">20</field>
-          </record>
-
-          <record id="object3" model="manage.manage">
-            <field name="name">Object 3</field>
-            <field name="value">30</field>
-          </record>
-
-          <record id="object4" model="manage.manage">
-            <field name="name">Object 4</field>
-            <field name="value">40</field>
-          </record>
--->
+      <record id='012DEV' model='res.partner'>
+        <field name='name'>Pablo Martínez Sánchez</field>
+        <field name='access_code'>12345677E</field>
+        <field name='is_dev'>True</field>
+      </record>
     </data>
 </odoo>
