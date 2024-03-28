@@ -16,7 +16,8 @@ class developer(models.Model):
 
     is_dev = fields.Boolean()
     access_code = fields.Char()
-    
+    last_login = fields.Date()
+
     technologies = fields.Many2many('manage.technology',
                                     relation='developer_technologies',
                                     column1='developer_id',
@@ -60,6 +61,17 @@ class developer(models.Model):
             category = self.env['res.partner.category'].create({'name':'Devs'})
         self.category_id = [(4, category.id)]    
     
+    @api.constrains('is_dev')
+    def _check_is_dev(self):
+        for dev in self:
+            if dev.is_dev:
+                categories = self.env['res.partner.category'].search([('name','=','Devs')])
+                if len(categories) > 0:
+                    category = categories[0]
+                else:
+                    category = self.env['res.partner.category'].create({'name':'Devs'})
+                dev.category_id = [(4, category.id)]  
+        
 
 class project(models.Model):
     _name = 'manage.project'

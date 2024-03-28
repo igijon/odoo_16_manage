@@ -14,6 +14,7 @@
             <group>
               <group>
                 <field name="is_dev" attrs="{'invisible':True}"></field>
+                <field name="last_login"></field>
                 <field name="access_code"></field>
                 <field name="technologies"></field>
                 <field 
@@ -51,11 +52,7 @@
       <field name="act_window_id" ref="manage.action_developer_window"></field>
     </record>
  
-    <record model="ir.actions.act_window" id="manage.action_technology_window">
-      <field name="name">manage technology window</field>
-      <field name="res_model">manage.technology</field>
-      <field name="view_mode">tree,form</field>
-    </record>
+
 
 
     <!-- server action to the one above -->
@@ -85,8 +82,7 @@
 -->
     <!-- actions -->
     
-    <menuitem name="Technologies" id="manage.menu_1_technology_list" parent="manage.menu_1"
-              action="manage.action_technology_window"/>
+
 
     <menuitem name="Devs" id="manage.menu_1_devs_list" parent="manage.menu_1"
               action="manage.action_developer_window"/>

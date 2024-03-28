@@ -1,0 +1,11 @@
+<odoo><data><record id='history_1' model='manage.history'><field name='name'>Flowdesk
+</field><field name='project' ref='project_1'></field></record><record id='history_2' model='manage.history'><field name='name'>Bitwolf
+</field><field name='project' ref='project_1'></field></record><record id='history_3' model='manage.history'><field name='name'>Alpha
+</field><field name='project' ref='project_1'></field></record><record id='history_4' model='manage.history'><field name='name'>Greenlam
+</field><field name='project' ref='project_1'></field></record><record id='history_5' model='manage.history'><field name='name'>Biodex
+</field><field name='project' ref='project_1'></field></record><record id='history_6' model='manage.history'><field name='name'>Keylex
+</field><field name='project' ref='project_1'></field></record><record id='history_7' model='manage.history'><field name='name'>Zoolab
+</field><field name='project' ref='project_1'></field></record><record id='history_8' model='manage.history'><field name='name'>Bitchip
+</field><field name='project' ref='project_1'></field></record><record id='history_9' model='manage.history'><field name='name'>Prodder
+</field><field name='project' ref='project_1'></field></record><record id='history_10' model='manage.history'><field name='name'>Flexidy
+</field><field name='project' ref='project_1'></field></record></data></odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record model="ir.ui.view" id="manage.technology_form">
+            <field name="name">manage technology form</field>
+            <field name="model">manage.technology</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="photo" widget="image" class="oe_avatar"/>
+                        <field name="description"/>
+                        <field name="tasks"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="manage.action_technology_window">
+      <field name="name">manage technology window</field>
+      <field name="res_model">manage.technology</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    </data>
+
+    <menuitem name="Technologies" id="manage.menu_1_technology_list" parent="manage.menu_1"
+              action="manage.action_technology_window"/>
+
+</odoo>

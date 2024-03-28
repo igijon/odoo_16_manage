@@ -26,6 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
+        'views/technology.xml',
         'views/project.xml',
         'views/history.xml',
         'views/sprint.xml',
@@ -37,6 +38,9 @@
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
-        'demo/devs.xml'
+        'demo/devs.xml',
+        'demo/projects.xml',
+        'demo/histories.xml',
+        'demo/technologies.xml'
     ],
 }
