@@ -3,6 +3,20 @@
 
     <data>
 
+        <record model="ir.ui.view" id="manage.sprint_list">
+            <field name="name">manage sprint list</field>
+            <field name="model">manage.sprint</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="active == True" decoration-warning="duration&lt;15">
+                    <field name="name"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="active" invisible="True"/>
+                    <field name="duration" sum="Total"/>
+                </tree>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="manage.sprint_form">
             <field name="name">manage sprint form</field>
             <field name="model">manage.sprint</field>

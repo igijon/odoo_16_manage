@@ -222,7 +222,8 @@ class sprint(models.Model):
     start_date = fields.Datetime()
     end_date = fields.Datetime(compute="_get_end_date", store=True)
     tasks = fields.One2many(string="Tareas", comodel_name="manage.task", inverse_name='sprint')
-    
+    active = fields.Boolean(compute="_get_active", store=True)
+
     @api.depends('start_date', 'duration')
     def _get_end_date(self):
         for sprint in self:
@@ -234,6 +235,17 @@ class sprint(models.Model):
                 _logger.debug("Fecha final de sprint creada")
             except:
                 raise ValidationError(_("Generación de fecha errónea"))
+
+    @api.depends('start_date', 'duration')
+    def _get_active(self):
+        for sprint in self:
+            if (isinstance(sprint.start_date, datetime.datetime) 
+               and isinstance(sprint.end_date, datetime.datetime)
+               and sprint.end_date > datetime.datetime.now()
+               and sprint.start_date <= datetime.datetime.now()):
+               sprint.active = True
+            else:
+               sprint.active = False 
 
 class technology(models.Model):
     _name = 'manage.technology'
